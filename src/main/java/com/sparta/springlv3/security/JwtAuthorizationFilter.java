@@ -1,12 +1,15 @@
 package com.sparta.springlv3.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.springlv3.jwt.JwtUtil;
+import com.sparta.springlv3.status.Message;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -36,7 +39,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(tokenValue)) {
 
             if (!jwtUtil.validateToken(tokenValue)) {
-                log.error("Token Error");
+                jwtExceptionHandler(res, "Token Error", HttpStatus.UNAUTHORIZED.value());
                 return;
             }
 
@@ -66,5 +69,19 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private Authentication createAuthentication(String username) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    }
+
+    //위의 if(token != null) 여기에서 Token 에 대한 오류가 발생했을 때, Exception 한 결과값을 Client 에게 넘긴다
+    //validateToken() 메소드를 실행해서 false 가 됐다면, jwtExceptionHandler() 메소드 실행 --> Client 로 반환
+    public void jwtExceptionHandler(HttpServletResponse response, String msg, int statusCode) {
+        response.setStatus(statusCode);
+        response.setContentType("application/json");
+        try {
+            //ObjectMapper 를 통해서 변환한다
+            String json = new ObjectMapper().writeValueAsString(new Message(statusCode, msg));
+            response.getWriter().write(json);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
     }
 }

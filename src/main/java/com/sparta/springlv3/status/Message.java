@@ -12,4 +12,9 @@ public class Message {
         this.statusCode = 200;
         this.message = null;
     }
+
+    public Message(int statusCode, String msg) {
+        this.statusCode = statusCode;
+        this.message = msg;
+    }
 }
