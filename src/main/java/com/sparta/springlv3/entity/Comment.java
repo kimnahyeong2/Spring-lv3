@@ -1,5 +1,6 @@
 package com.sparta.springlv3.entity;
 
+import com.sparta.springlv3.dto.CommentRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,10 @@ public class Comment extends Timestamped{
     @ManyToOne
     @JoinColumn(name = "board_id", nullable = false)
     private Board board;
+
+    public Comment(CommentRequestDto requestDto, User user, Board board) {
+        this.comment = requestDto.getComment();
+        this.user = user;
+        this.board = board;
+    }
 }

@@ -5,6 +5,7 @@ import com.sparta.springlv3.dto.BoardResponseDto;
 import com.sparta.springlv3.security.UserDetailsImpl;
 import com.sparta.springlv3.service.BoardService;
 import com.sparta.springlv3.status.Message;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +17,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @Slf4j
+@RequiredArgsConstructor
 
 public class BoardController {
     private final BoardService boardService;
-
-    @Autowired
-    public BoardController(BoardService boardService){
-        this.boardService = boardService;
-    }
 
     @GetMapping("/feed")
     public List<BoardResponseDto.BoardReadResponseDto> getBoards(){

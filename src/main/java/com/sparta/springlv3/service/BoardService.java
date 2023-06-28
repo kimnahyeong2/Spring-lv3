@@ -7,6 +7,7 @@ import com.sparta.springlv3.entity.User;
 import com.sparta.springlv3.repository.BoardRepository;
 import com.sparta.springlv3.status.Message;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,12 +19,10 @@ import java.util.Objects;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
+
 public class BoardService {
     private final BoardRepository boardRepository;
-    @Autowired
-    public BoardService(BoardRepository boardRepository){
-        this.boardRepository = boardRepository;
-    }
 
     public List<BoardResponseDto.BoardReadResponseDto> getBoards() {
         return boardRepository.findAllByOrderByCreatedAtDesc().stream().map(BoardResponseDto.BoardReadResponseDto::new).toList();
