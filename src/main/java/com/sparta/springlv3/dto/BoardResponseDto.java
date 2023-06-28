@@ -1,9 +1,12 @@
 package com.sparta.springlv3.dto;
 
 import com.sparta.springlv3.entity.Board;
+import com.sparta.springlv3.entity.Comment;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BoardResponseDto {
     // param 형식으로 값을 넘겨주려고 할 때에는 @Setter와 @NoArgsConstructor를 넣어주어야함
@@ -34,11 +37,16 @@ public class BoardResponseDto {
         private String contents;
         private LocalDateTime createdAt;
 
+        private List<CommentResponseDto> commentList  = new ArrayList<>();
+
         public BoardReadResponseDto(Board board){
             this.title = board.getTitle();
             this.username = board.getUsername();
             this.contents = board.getContents();
             this.createdAt = board.getCreatedAt();
+            for(Comment comment : board.getCommentList()) {
+                commentList.add(new CommentResponseDto(comment));
+            }
         }
     }
 }

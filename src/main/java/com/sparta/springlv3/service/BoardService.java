@@ -34,6 +34,7 @@ public class BoardService {
         Board board = boardRepository.save(new Board(requestDto, user));
         return new BoardResponseDto.BoardBasicResponseDto(board);
     }
+
     public BoardResponseDto.BoardReadResponseDto getSelectBoards(Long id) {
         Board board = findBoard(id);
         return ResponseEntity.ok().body(new BoardResponseDto.BoardReadResponseDto(board)).getBody();
