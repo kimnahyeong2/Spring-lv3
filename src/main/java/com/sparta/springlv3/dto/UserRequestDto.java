@@ -24,7 +24,7 @@ public class UserRequestDto {
         private String username;
 
         @Size(min = 8, max = 15)
-        @Pattern(regexp = "^[a-zA-Z0-9]*$")
+        @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,15}")
         @NotBlank
         private String password;
 
