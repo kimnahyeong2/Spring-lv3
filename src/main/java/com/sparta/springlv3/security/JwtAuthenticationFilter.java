@@ -2,6 +2,7 @@ package com.sparta.springlv3.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.springlv3.dto.UserRequestDto;
+import com.sparta.springlv3.entity.UserRoleEnum;
 import com.sparta.springlv3.jwt.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,8 +45,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
         String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
+        UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
 
-        String token = jwtUtil.createToken(username);
+        String token = jwtUtil.createToken(username, role);
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
     }
 

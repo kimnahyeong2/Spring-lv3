@@ -27,11 +27,15 @@ public class UserRequestDto {
         @Pattern(regexp = "^[a-zA-Z0-9]*$")
         @NotBlank
         private String password;
+
+        private boolean admin = false;
+        private String adminToken = "";
     }
 
     @Getter
     @AllArgsConstructor
     public static class UserInfoDto {
         String username;
+        boolean isAdmin;
     }
 }

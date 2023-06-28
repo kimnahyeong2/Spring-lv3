@@ -1,15 +1,17 @@
 package com.sparta.springlv3.security;
 
 import com.sparta.springlv3.entity.User;
+import com.sparta.springlv3.entity.UserRoleEnum;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class UserDetailsImpl implements UserDetails {
 
     private final User user;
-    private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(User user) {
         this.user = user;
@@ -20,11 +22,6 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
     public String getPassword() {
         return user.getPassword();
     }
@@ -32,6 +29,18 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getUsername() {
         return user.getUsername();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        UserRoleEnum role = user.getRole();
+        String authority = role.getAuthority();
+
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(simpleGrantedAuthority);
+
+        return authorities;
     }
 
     @Override
