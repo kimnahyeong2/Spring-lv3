@@ -3,7 +3,9 @@ package com.sparta.springlv3.service;
 import com.sparta.springlv3.dto.BoardRequestDto;
 import com.sparta.springlv3.dto.BoardResponseDto;
 import com.sparta.springlv3.entity.Board;
+import com.sparta.springlv3.entity.Comment;
 import com.sparta.springlv3.entity.User;
+import com.sparta.springlv3.entity.UserRoleEnum;
 import com.sparta.springlv3.repository.BoardRepository;
 import com.sparta.springlv3.status.Message;
 import jakarta.transaction.Transactional;
@@ -40,9 +42,7 @@ public class BoardService {
     @Transactional
     public BoardResponseDto.BoardReadResponseDto updateBoard(Long id, BoardRequestDto requestDto, User user) {
         Board board = findBoard(id);
-        if(!Objects.equals(board.getUser().getId(), user.getId())){
-            throw new IllegalArgumentException("해당 사용자가 작성한 게시글이 아닙니다.");
-        }
+        confirmUser(board, user);
         board.update(requestDto);
         return ResponseEntity.ok().body(new BoardResponseDto.BoardReadResponseDto(board)).getBody();
     }
@@ -51,9 +51,8 @@ public class BoardService {
         Message message = new Message();
         
         Board board = findBoard(id);
-        if(!Objects.equals(board.getUser().getId(), user.getId())){
-            throw new IllegalArgumentException("해당 사용자가 작성한 게시글이 아닙니다.");
-        }
+        confirmUser(board, user);
+        
         boardRepository.delete(board);
         message.setMessage("삭제 완료");
         return new ResponseEntity<Message>(message, HttpStatus.OK);
@@ -63,6 +62,13 @@ public class BoardService {
         return boardRepository.findById(id).orElseThrow(()->
                 new IllegalArgumentException("존재하지 않습니다")
         );
+    }
+
+    private void confirmUser(Board board, User user) {
+        UserRoleEnum userRoleEnum = user.getRole();
+        if (userRoleEnum == UserRoleEnum.USER && !Objects.equals(board.getUser().getId(), user.getId())) {
+            throw new IllegalArgumentException("사용자가 작성한 게시물이 아닙니다.");
+        }
     }
 
 }

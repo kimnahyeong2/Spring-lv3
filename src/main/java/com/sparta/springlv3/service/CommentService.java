@@ -5,6 +5,7 @@ import com.sparta.springlv3.dto.CommentResponseDto;
 import com.sparta.springlv3.entity.Board;
 import com.sparta.springlv3.entity.Comment;
 import com.sparta.springlv3.entity.User;
+import com.sparta.springlv3.entity.UserRoleEnum;
 import com.sparta.springlv3.repository.BoardRepository;
 import com.sparta.springlv3.repository.CommentRepository;
 import com.sparta.springlv3.status.Message;
@@ -57,17 +58,16 @@ public class CommentService {
         return new ResponseEntity<Message>(message, HttpStatus.OK);
     }
 
-    private Comment findComment(Long commentId){
+    private Comment findComment(Long commentId) {
         return commentRepository.findById(commentId).orElseThrow(
                 () -> new NullPointerException("해당 댓글이 존재하지 않습니다.")
         );
     }
 
-    private void confirmUser(Comment comment, User user){
-        if(!Objects.equals(comment.getUser().getId(), user.getId())){
+    private void confirmUser(Comment comment, User user) {
+        UserRoleEnum userRoleEnum = user.getRole();
+        if (userRoleEnum == UserRoleEnum.USER && !Objects.equals(comment.getUser().getId(), user.getId())) {
             throw new IllegalArgumentException("사용자가 작성한 댓글이 아닙니다.");
         }
     }
-
-
 }
