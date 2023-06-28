@@ -1,6 +1,6 @@
 package com.sparta.springlv3.dto;
 
-import com.sparta.springlv2.entity.Board;
+import com.sparta.springlv3.entity.Board;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

@@ -1,10 +1,10 @@
 package com.sparta.springlv3.controller;
 
-import com.sparta.springlv2.dto.BoardRequestDto;
-import com.sparta.springlv2.dto.BoardResponseDto;
-import com.sparta.springlv2.security.UserDetailsImpl;
-import com.sparta.springlv2.service.BoardService;
-import com.sparta.springlv2.status.Message;
+import com.sparta.springlv3.dto.BoardRequestDto;
+import com.sparta.springlv3.dto.BoardResponseDto;
+import com.sparta.springlv3.security.UserDetailsImpl;
+import com.sparta.springlv3.service.BoardService;
+import com.sparta.springlv3.status.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,8 @@
 package com.sparta.springlv3.service;
 
-import com.sparta.springlv2.dto.UserRequestDto;
-import com.sparta.springlv2.entity.User;
-import com.sparta.springlv2.repository.UserRepository;
+import com.sparta.springlv3.dto.UserRequestDto;
+import com.sparta.springlv3.entity.User;
+import com.sparta.springlv3.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

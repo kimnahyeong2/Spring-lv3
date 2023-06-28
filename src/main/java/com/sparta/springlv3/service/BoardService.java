@@ -1,11 +1,11 @@
 package com.sparta.springlv3.service;
 
-import com.sparta.springlv2.dto.BoardRequestDto;
-import com.sparta.springlv2.dto.BoardResponseDto;
-import com.sparta.springlv2.entity.Board;
-import com.sparta.springlv2.entity.User;
-import com.sparta.springlv2.repository.BoardRepository;
-import com.sparta.springlv2.status.Message;
+import com.sparta.springlv3.dto.BoardRequestDto;
+import com.sparta.springlv3.dto.BoardResponseDto;
+import com.sparta.springlv3.entity.Board;
+import com.sparta.springlv3.entity.User;
+import com.sparta.springlv3.repository.BoardRepository;
+import com.sparta.springlv3.status.Message;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

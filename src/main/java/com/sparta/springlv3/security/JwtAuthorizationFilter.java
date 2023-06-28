@@ -1,6 +1,6 @@
 package com.sparta.springlv3.security;
 
-import com.sparta.springlv2.jwt.JwtUtil;
+import com.sparta.springlv3.jwt.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

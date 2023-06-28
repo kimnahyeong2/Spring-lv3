@@ -1,6 +1,6 @@
 package com.sparta.springlv3.security;
 
-import com.sparta.springlv2.entity.User;
+import com.sparta.springlv3.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

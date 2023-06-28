@@ -1,8 +1,8 @@
 package com.sparta.springlv3.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.springlv2.dto.UserRequestDto;
-import com.sparta.springlv2.jwt.JwtUtil;
+import com.sparta.springlv3.dto.UserRequestDto;
+import com.sparta.springlv3.jwt.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

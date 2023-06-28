@@ -1,9 +1,9 @@
 package com.sparta.springlv3.config;
 
-import com.sparta.springlv2.jwt.JwtUtil;
-import com.sparta.springlv2.security.JwtAuthenticationFilter;
-import com.sparta.springlv2.security.JwtAuthorizationFilter;
-import com.sparta.springlv2.security.UserDetailsServiceImpl;
+import com.sparta.springlv3.jwt.JwtUtil;
+import com.sparta.springlv3.security.JwtAuthenticationFilter;
+import com.sparta.springlv3.security.JwtAuthorizationFilter;
+import com.sparta.springlv3.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;

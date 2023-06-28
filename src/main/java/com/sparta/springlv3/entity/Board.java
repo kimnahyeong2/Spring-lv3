@@ -1,6 +1,6 @@
 package com.sparta.springlv3.entity;
 
-import com.sparta.springlv2.dto.BoardRequestDto;
+import com.sparta.springlv3.dto.BoardRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

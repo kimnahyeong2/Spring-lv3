@@ -1,7 +1,7 @@
 package com.sparta.springlv3.security;
 
-import com.sparta.springlv2.entity.User;
-import com.sparta.springlv2.repository.UserRepository;
+import com.sparta.springlv3.entity.User;
+import com.sparta.springlv3.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

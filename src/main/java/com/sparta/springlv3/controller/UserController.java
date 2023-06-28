@@ -1,9 +1,9 @@
 package com.sparta.springlv3.controller;
 
-import com.sparta.springlv2.dto.UserRequestDto;
-import com.sparta.springlv2.entity.User;
-import com.sparta.springlv2.service.UserService;
-import com.sparta.springlv2.status.Message;
+import com.sparta.springlv3.dto.UserRequestDto;
+import com.sparta.springlv3.entity.User;
+import com.sparta.springlv3.service.UserService;
+import com.sparta.springlv3.status.Message;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
