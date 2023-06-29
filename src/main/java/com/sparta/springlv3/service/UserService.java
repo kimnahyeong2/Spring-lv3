@@ -4,7 +4,10 @@ import com.sparta.springlv3.dto.UserRequestDto;
 import com.sparta.springlv3.entity.User;
 import com.sparta.springlv3.entity.UserRoleEnum;
 import com.sparta.springlv3.repository.UserRepository;
+import com.sparta.springlv3.status.Message;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,20 +23,26 @@ public class UserService {
     // ADMIN_TOKEN
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
-    public User signup(UserRequestDto.SignupRequestDto requestDto) {
+    public ResponseEntity<Message> signup(UserRequestDto.SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
+
+        Message message = new Message();
 
         // 회원 중복 확인
         Optional<User> checkUsername = userRepository.findByUsername(username);
         if (checkUsername.isPresent()) {
-            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
+            message.setStatusCode(400);
+            message.setMessage("중복된 username 입니다.");
+            return new ResponseEntity<Message>(message, HttpStatus.BAD_REQUEST);
         }
 
         UserRoleEnum role = UserRoleEnum.USER;
         if(requestDto.isAdmin()){
             if(!ADMIN_TOKEN.equals(requestDto.getAdminToken())) {
-                throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
+                message.setStatusCode(400);
+                message.setMessage("관리자 암호가 틀려 등록이 불가능합니다.");
+                return new ResponseEntity<Message>(message, HttpStatus.BAD_REQUEST);
             }
             role = UserRoleEnum.ADMIN;
         }
@@ -41,7 +50,8 @@ public class UserService {
         // 사용자 등록
         User user = new User(username, password, role);
         userRepository.save(user);
+        message.setMessage("회원가입에 성공하였습니다");
 
-        return user;
+        return new ResponseEntity<Message>(message, HttpStatus.OK);
     }
 }

@@ -1,7 +1,6 @@
 package com.sparta.springlv3.controller;
 
 import com.sparta.springlv3.dto.UserRequestDto;
-import com.sparta.springlv3.entity.User;
 import com.sparta.springlv3.service.UserService;
 import com.sparta.springlv3.status.Message;
 import jakarta.validation.Valid;
@@ -41,10 +40,6 @@ public class UserController {
             return new ResponseEntity<Message>(message, HttpStatus.NOT_FOUND);
         }
 
-        User user = userService.signup(requestDto);
-
-        message.setMessage("회원가입에 성공하였습니다");
-
-        return new ResponseEntity<Message>(message, HttpStatus.OK);
+        return userService.signup(requestDto);
     }
 }

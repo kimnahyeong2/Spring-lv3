@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.springlv3.dto.UserRequestDto;
 import com.sparta.springlv3.entity.UserRoleEnum;
 import com.sparta.springlv3.jwt.JwtUtil;
+import com.sparta.springlv3.status.Message;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -53,7 +54,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) {
-        response.setStatus(401);
+        log.info("Login 실패");
+        response.setStatus(400);
+        response.setContentType("application/json");
+        try {
+            String json = new ObjectMapper().writeValueAsString(new Message(400, "회원을 찾을 수 없습니다."));
+            response.getWriter().write(json);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
     }
 
 }

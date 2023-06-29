@@ -38,11 +38,17 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentResponseDto updateComment(Long commentId, CommentRequestDto requestDto, User user) {
+    public ResponseEntity<?> updateComment(Long commentId, CommentRequestDto requestDto, User user) {
         Comment comment = findComment(commentId);
-        confirmUser(comment, user);
+        if(!confirmUser(comment, user)){
+            Message message = new Message();
+            message.setMessage("작성자만 수정할 수 있습니다.");
+            message.setStatusCode(400);
+            return new ResponseEntity<Message>(message, HttpStatus.BAD_REQUEST);
+        }
+
         comment.update(requestDto);
-        return ResponseEntity.ok().body(new CommentResponseDto(comment)).getBody();
+        return ResponseEntity.ok().body(new CommentResponseDto(comment));
     }
 
     @Transactional
@@ -50,7 +56,12 @@ public class CommentService {
         Message message = new Message();
 
         Comment comment = findComment(commentId);
-        confirmUser(comment, user);
+
+        if(!confirmUser(comment, user)){
+            message.setMessage("작성자만 삭제할 수 있습니다.");
+            message.setStatusCode(400);
+            return new ResponseEntity<Message>(message, HttpStatus.BAD_REQUEST);
+        }
 
         commentRepository.delete(comment);
 
@@ -64,10 +75,8 @@ public class CommentService {
         );
     }
 
-    private void confirmUser(Comment comment, User user) {
+    private boolean confirmUser(Comment comment, User user) {
         UserRoleEnum userRoleEnum = user.getRole();
-        if (userRoleEnum == UserRoleEnum.USER && !Objects.equals(comment.getUser().getId(), user.getId())) {
-            throw new IllegalArgumentException("사용자가 작성한 댓글이 아닙니다.");
-        }
+        return userRoleEnum != UserRoleEnum.USER || Objects.equals(comment.getUser().getId(), user.getId());
     }
 }
